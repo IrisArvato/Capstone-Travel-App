@@ -1,3 +1,6 @@
+const handleRequest = require('./handleRequest.js')
+const dotenv = require('dotenv');
+
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
 
@@ -19,9 +22,13 @@ const cors = require('cors');
 app.use(cors());
 
 // Initialize the main project folder
-app.use(express.static('website'));
+app.use(express.static('dist'));
 
 // Setup Server
+dotenv.config();
+
+console.log(`Your API key is ${process.env.PIXABY_KEY}`);
+
 const port = 3000;
 app.listen(port, listening);
 
@@ -42,6 +49,9 @@ app.get('/all', function (req, res) {
 });
 
 // Post Route
+
+app.post('/image', handleRequest.getPhotoFromPixabay)
+
 app.post('/add', function (req, res) {
     console.log(req.body); 
     projectData = {
@@ -55,3 +65,4 @@ app.post('/add', function (req, res) {
         message: "Data saved successfully."
     });
 });
+

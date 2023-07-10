@@ -14,22 +14,28 @@ submitButton.addEventListener('click', generateData);
 
 // To retrieve the last saved result
 function generateData() {
-    const zip = document.getElementById("zip").value;
-    const content = document.getElementById("feelings").value;
+    // const zip = document.getElementById("zip").value;
+    // const content = document.getElementById("feelings").value;
 
-    // Get WeatherData with promise
-    getWeatherData(zip).then((data) => {
-        if (data) {
-            const mappedData = {
-                date: newDate,
-                temp: data.main.temp,
-                content: content,
-                zip: zip
-            };
+    // // Get WeatherData with promise
+    // getWeatherData(zip).then((data) => {
+    //     if (data) {
+    //         const mappedData = {
+    //             date: newDate,
+    //             temp: data.main.temp,
+    //             content: content,
+    //             zip: zip
+    //         };
 
-            postData("/add", mappedData);
-            reloadUi();
-        }
+    //         postData("/add", mappedData);
+    //         reloadUi();
+    //     }
+    // });
+
+    const location = document.getElementById("location-input").value;
+
+    getImageByLocation(location).then((data) => {
+        document.getElementById('location-img').src = data.webformatURL;
     });
 };
 
@@ -39,6 +45,16 @@ const getWeatherData = async (zip) => {
         const param = '&appid=' + apiKey + '&units=imperial';
         const res = await fetch(baseUrl + zip + param);
         const data = await res.json();
+
+        return data;
+    } catch (error) {
+        console.log("Error", error);
+    }
+};
+
+const getImageByLocation = async (location) => {
+    try {
+        const data = await postData('/image', { 'location': location});
 
         return data;
     } catch (error) {
