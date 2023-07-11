@@ -1,50 +1,49 @@
-/* Global Variables */
-const baseUrl = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '45d9c70b158b7f87907303efc7472974';
 
-// Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
+import { reloadSearchResult, reloadRecentSearchUI, addSearchError, clearSearchInfo } from "./updateUI"
 
-// Add event listerner on submit button
-const submitButton = document.getElementById("generate");
-submitButton.addEventListener('click', generateData);
+// Add event listerner  
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('travelDate').valueAsDate = new Date();
+    getRecentSearch();
+});
 
 /* Function called by event listener */
 
-// To retrieve the last saved result
-function generateData() {
-    // const zip = document.getElementById("zip").value;
-    // const content = document.getElementById("feelings").value;
+// To search travel location information
 
-    // // Get WeatherData with promise
-    // getWeatherData(zip).then((data) => {
-    //     if (data) {
-    //         const mappedData = {
-    //             date: newDate,
-    //             temp: data.main.temp,
-    //             content: content,
-    //             zip: zip
-    //         };
+function clearSearch() {
+    document.getElementById("location-input").value = '';    
+    document.getElementById("search-result").style.display = 'none';
 
-    //         postData("/add", mappedData);
-    //         reloadUi();
-    //     }
-    // });
+    clearSearchInfo();
+}
+
+function searchData() {
+    // refresh recent search
+    getRecentSearch();
 
     const location = document.getElementById("location-input").value;
 
-    getImageByLocation(location).then((data) => {
-        document.getElementById('location-img').src = data.webformatURL;
+    clearSearchInfo();
+    if (!location || location == '') {
+        addSearchError('Please enter the destionation to search');
+        document.getElementById("location-input").focus();  
+        return;
+    }
+    
+    const travelDate = document.getElementById("travelDate").value;
+
+    searchLocation(location, travelDate).then((data) => {
+        if (data) {
+            reloadSearchResult(data);
+        }            
     });
 };
 
-/* Function to GET Web API Data*/
-const getWeatherData = async (zip) => {
+const searchLocation = async (location, travelDate) => {
     try {
-        const param = '&appid=' + apiKey + '&units=imperial';
-        const res = await fetch(baseUrl + zip + param);
-        const data = await res.json();
+        const data = await postData('/search', { 'location': location, 'travelDate': travelDate});
 
         return data;
     } catch (error) {
@@ -52,11 +51,15 @@ const getWeatherData = async (zip) => {
     }
 };
 
-const getImageByLocation = async (location) => {
-    try {
-        const data = await postData('/image', { 'location': location});
 
-        return data;
+// To get recent search information
+async function getRecentSearch() {
+    try {
+        await fetch('/recent')
+        .then(res => res.json())
+        .then(function(res) {
+            reloadRecentSearchUI(res);
+        });
     } catch (error) {
         console.log("Error", error);
     }
@@ -84,29 +87,4 @@ const postData = async (url = '', data = {}) => {
     }
 }
 
-/* Update UI */
-const reloadUi = async () => {
-    const res = await fetch('/all');
-    try {        
-        if (res.status == 204) 
-        {
-            document.getElementById("content").innerHTML = "No recent entry";
-            return;
-        }
-
-        const result = await res.json();
-        console.log(result);
-        
-        document.getElementById("zip").value = result.zip;
-        document.getElementById("feelings").value = result.content;
-
-        document.getElementById("date").innerHTML = "Date: " + result.date;
-        document.getElementById("temp").innerHTML = "Temperature: " + result.temp + '&degF';
-        document.getElementById("content").innerHTML = "Your Feeling: " + result.content;
-    } catch (error) {
-        console.log("Error", error);
-    }
-};
-
-// Start loading Ui with the last saved data
-reloadUi();
+export { searchData, searchLocation }

@@ -3,36 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <title>Travel Planner App</title>
-<link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div id = "app">
-  <div class ="holder headline">
-    Travel Planner App
-  </div>
-
-  <section>
+<div >
+  <header>
     <div>
-      <h2>Enter your destination:</h2>
-      <input id="location-input" />
+      <h1>Travel Planner App</h1>
+      <h2>Your travel buddy helping you on your upcoming travel plans</h2>
     </div>
     <div>
-      <h3>Your departure date: </h3>
-      <input type="date" id="departure">
+      <nav>
+        <a href="#search-trip" >Search Trip</a>
+        <a href="#recent-search" >Recent Search</a>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section>
-    <div>
-      <img id="location-img" />
-      <div id="info">
-
+  <section id="search-trip">
+    <div class="container search-container">
+      <div class="search-block">
+        <div class="search-label"><h3>Find destination:</h3></div>          
+        <input class="filter-input" id="location-input" />
+      </div>
+      <div class="search-block">
+        <div class="search-label"><h3>Travel date:</h3></div>          
+        <input class="filter-input" type="date" id="travelDate">
+      </div>
+      <div class="search-block">
+        <div class="search-label"></div>
+        <div>
+          <ul id="search-info"></ul>
+        </div>
+      </div>
+      <div class="search-block">
+        <div class="search-label"></div>
+        <div>
+          <button class="search" id="search" type="button" click="searchData()"> Search </button>
+          <button class="clear" id="clear" type="button" click="clearSearch()"> Clear </button>
+        </div>
       </div>
     </div>
   </section>
-  
-  <button id="generate" type = "submit"> Generate </button>
 
+  <section>
+    <div class="container content-container" style="display: none;" id="search-result">
+      <div class="content-block">
+        <div class="content-card">
+          <img id="location-img" />
+        </div>
+        <div class="content-card last-card">
+          <div id="location-info" >
+          </div>
+          <div id="weather-info" >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="recent-search">
+    <h2>Recent Search</h2>
+    <div class="container">
+      <div id="recent-search-trip">
+        <div>
+          <h3>No recent search found.</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <h5>Copyright &copy Udacity - Iris Tan</h5>
+    </div>
+  </footer>
   </div>
 
   <script>

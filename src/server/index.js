@@ -1,9 +1,6 @@
 const handleRequest = require('./handleRequest.js')
 const dotenv = require('dotenv');
 
-// Setup empty JS object to act as endpoint for all routes
-projectData = {};
-
 // Require Express to run server and routes
 const express = require('express');
 
@@ -37,32 +34,11 @@ function listening() {
 }
 
 // Get Route
-app.get('/all', function (req, res) {
-    if (projectData.zip == undefined) {
-        res.status(204).send({
-            message: "No content"
-        });
-        return;
-    }
-
-    res.status(200).send(projectData);
+app.get('/recent', function (req, res) {
+    res.status(200).send(handleRequest.projectData);
 });
 
 // Post Route
 
-app.post('/image', handleRequest.getPhotoFromPixabay)
-
-app.post('/add', function (req, res) {
-    console.log(req.body); 
-    projectData = {
-        date : req.body.date,
-        temp : req.body.temp,
-        content : req.body.content,
-        zip : req.body.zip,
-    };
-
-    res.status(201).send({
-        message: "Data saved successfully."
-    });
-});
+app.post('/search', handleRequest.searchLocation)
 

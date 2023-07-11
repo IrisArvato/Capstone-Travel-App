@@ -1,0 +1,18 @@
+
+button {
+    
+    padding: 10px 30px;
+    font-size: larger;
+    border-radius: 25%;
+    border-color: transparent;
+
+    &.search {
+        color: #fff;
+        background-color: #3d3dc9;
+    }
+
+    &.clear {
+        color: #fff;
+        background-color: #6292de;
+    }
+}
