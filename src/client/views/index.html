@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Travel Planner App</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Travel Planner App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div >
   <header>
     <div>
       <h1>Travel Planner App</h1>
@@ -19,66 +18,68 @@
       </nav>
     </div>
   </header>
-
-  <section id="search-trip">
-    <div class="container search-container">
-      <div class="search-block">
-        <div class="search-label"><h3>Find destination:</h3></div>          
-        <input class="filter-input" id="location-input" />
-      </div>
-      <div class="search-block">
-        <div class="search-label"><h3>Travel date:</h3></div>          
-        <input class="filter-input" type="date" id="travelDate">
-      </div>
-      <div class="search-block">
-        <div class="search-label"></div>
-        <div>
-          <ul id="search-info"></ul>
+  <main>
+    <section id="search-trip">
+      <div class="container search-container">
+        <div class="search-block">
+          <div class="search-label"><h3>Find destination:</h3></div>          
+          <input class="filter-input" id="location-input" />
         </div>
-      </div>
-      <div class="search-block">
-        <div class="search-label"></div>
-        <div>
-          <button class="search" id="search" type="button" onclick="return Client.searchData(event)"> Search </button>
-          <button class="clear" id="clear" type="button" onclick="return Client.clearSearch(event)"> Clear </button>
+        <div class="search-block">
+          <div class="search-label"><h3>Travel date:</h3></div>          
+          <input class="filter-input" type="date" id="travelDate">
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container content-container" style="display: none;" id="search-result">
-      <div class="content-block">
-        <div class="content-card">
-          <img id="location-img" />
-        </div>
-        <div class="content-card last-card">
-          <div id="location-info" >
+        <div class="search-block">
+          <div class="search-label"></div>
+          <div>
+            <ul id="search-info"></ul>
           </div>
-          <div id="weather-info" >
+        </div>
+        <div class="search-block">
+          <div class="search-label"></div>
+          <div>
+            <button class="search" id="search" type="button" onclick="return Client.searchData(event)"> Search </button>
+            <button class="clear" id="clear" type="button" onclick="return Client.clearSearch(event)"> Clear </button>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="recent-search">
-    <h2>Recent Search</h2>
-    <div class="container">
-      <div id="recent-search-trip">
-        <div>
-          <h3>No recent search found.</h3>
+    </section>
+  
+    <section id="search-content">
+      <div class="container content-container hidden" id="search-result-info"></div>
+      <div class="container content-container hidden" id="search-result">
+        <div class="content-block">
+          <div class="content-card">
+            <img id="location-img" />
+          </div>
+          <div class="content-card last-card">
+            <div id="location-info" >
+            </div>
+            <div id="weather-info" >
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  
+    <section id="recent-search">
+      <h2>Recent Search</h2>
+      <div class="container">
+        <div id="recent-search-trip">
+          <div>
+            <h3>No recent search found.</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
 
 
   <footer>
     <h5>Copyright &copy Udacity - Iris Tan</h5>
     </div>
   </footer>
-  </div>
 
   <script>
     if ('serviceWorker' in navigator) {
@@ -91,6 +92,6 @@
     else{
         console.log("Service Working not supported");
     }
-</script>
+  </script>
 </body>
 </html>

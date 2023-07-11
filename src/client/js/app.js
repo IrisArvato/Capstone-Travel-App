@@ -1,5 +1,5 @@
 
-import { reloadSearchResult, reloadRecentSearchUI, addSearchError, clearSearchInfo } from "./updateUI"
+import { reloadSearchResult, reloadRecentSearchUI, showSearchResultInfo, addSearchError, clearSearchInfo } from "./updateUI"
 
 // Add event listerner  
 
@@ -20,6 +20,9 @@ const clearSearch = (event) => {
 }
 
 const searchData = async (event) => {
+
+    showSearchResultInfo('Searching for the destination...');
+
     // refresh recent search
     await getRecentSearch();
 

@@ -47,13 +47,9 @@ exports.searchLocation = async (req, res) => {
             }
 
             this.projectData.unshift(data);
-
-            res.status(200).send(data);
-
-            return;
         }
 
-        res.status(204).send('No content');
+        res.status(200).send(data);
     } catch (e) {
         console.log(e);
         res.status(400).send(e);

@@ -1,6 +1,14 @@
 
 // To update the search result 
 function reloadSearchResult(tripData) {
+    const searchResultElem = document.getElementById("search-result");
+    const searchResultInfoElem = document.getElementById("search-result-info");
+
+    if (tripData.name == null) {
+        showSearchResultInfo(`Destination not found`);
+        return;
+    }
+
     document.getElementById('location-img').src = tripData.imgURL;
     
     document.getElementById('location-info').innerHTML = `
@@ -11,7 +19,7 @@ function reloadSearchResult(tripData) {
     <div><label>Longitude :</label>${tripData.lng}</div>
     <div><label>Travel Date :</label>${tripData.travelDate} ${getCountDown(tripData.travelDate)}</div>`;
 
-    if (tripData.weather.date != null) { 
+    if (tripData.weather != null && tripData.weather.date != null) { 
         const weatherData = tripData.weather;
         document.getElementById('weather-info').innerHTML = `
         <div><label>Weather Forecast :</label>${weatherData.min_temp}°C - ${weatherData.max_temp}°C (${weatherData.description})</div>`;
@@ -22,13 +30,20 @@ function reloadSearchResult(tripData) {
         }
     }
 
-    document.getElementById("search-result").style.display = 'block';
+    searchResultElem.classList.remove("hidden");
+    if (!searchResultInfoElem.classList.contains("hidden")) {
+        searchResultInfoElem.classList.add("hidden");
+    }
 }
 
 // To reload the recent search card in UI
 function reloadRecentSearchUI(tripDatas) {    
     const recentBlock = document.getElementById('recent-search-trip');
     recentBlock.innerHTML = ''
+
+    if (tripDatas.length == 0) {
+        recentBlock.innerHTML = '<div>No recent search found.</div>'
+    }
     
     tripDatas.forEach(data => {
         console.log(data);
@@ -76,7 +91,19 @@ function getCountDown(date) {
     return `(today)`;
 }
 
+function showSearchResultInfo(msg) {
+    
+    const searchResultElem = document.getElementById("search-result");
+    const searchResultInfoElem = document.getElementById("search-result-info");
+    
+    searchResultInfoElem.innerHTML = msg;
+    searchResultInfoElem.classList.remove("hidden");
+    if (!searchResultElem.classList.contains("hidden")) {
+        searchResultElem.classList.add("hidden");
+    }
+}
 
+// show search error
 const addSearchError = (txt) => {
     const srcInfo = document.getElementById('search-info');
     const srcContent = document.createElement('li');
@@ -85,9 +112,10 @@ const addSearchError = (txt) => {
     srcInfo.appendChild(srcContent);
 };
 
+// clear search error
 const clearSearchInfo = () => {
     const srcInfo = document.getElementById('search-info');
     srcInfo.innerHTML = '';
 };
 
-export { reloadSearchResult, reloadRecentSearchUI, addSearchError, clearSearchInfo };
+export { reloadSearchResult, reloadRecentSearchUI, showSearchResultInfo, addSearchError, clearSearchInfo };

@@ -1,4 +1,4 @@
-import { clearSearch, searchData } from './js/formHandler'
+import { clearSearch, searchData } from './js/app'
 
 import './styles/style.scss' 
 import './styles/button.scss' 
