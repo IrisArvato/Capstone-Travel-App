@@ -12,16 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // To search travel location information
 
-function clearSearch() {
+const clearSearch = (event) => {
     document.getElementById("location-input").value = '';    
     document.getElementById("search-result").style.display = 'none';
 
     clearSearchInfo();
 }
 
-function searchData() {
+const searchData = async (event) => {
     // refresh recent search
-    getRecentSearch();
+    await getRecentSearch();
 
     const location = document.getElementById("location-input").value;
 
@@ -87,4 +87,4 @@ const postData = async (url = '', data = {}) => {
     }
 }
 
-export { searchData, searchLocation }
+export { searchData, clearSearch, searchLocation }
