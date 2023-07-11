@@ -48,26 +48,25 @@ To install the project dependencies, please follow the following steps:
 `cd` into your new folder and run:
 - `npm install`
 
-### Run in development
-
-Start project immediately using the webpack dev-server
-
-```bash
-npm build-dev
-```
-
 ### Run in production
 
 Generate the dist folder
 
 ```bash
-npm build-prod
+npm run build-prod
 ```
 
 start the server
 
 ```bash
-npm start
+npm run start
+```
+### Run in development
+
+Start project immediately using the webpack dev-server
+
+```bash
+npm run build-dev
 ```
 
 ### Run tests
