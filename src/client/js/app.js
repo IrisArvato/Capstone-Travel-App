@@ -46,7 +46,7 @@ const searchData = async (event) => {
 
 const searchLocation = async (location, travelDate) => {
     try {
-        const data = await postData('/search', { 'location': location, 'travelDate': travelDate});
+        const data = await postData('http://localhost:3000/search', { 'location': location, 'travelDate': travelDate});
 
         return data;
     } catch (error) {
@@ -58,7 +58,7 @@ const searchLocation = async (location, travelDate) => {
 // To get recent search information
 async function getRecentSearch() {
     try {
-        await fetch('/recent')
+        await fetch('http://localhost:3000/recent')
         .then(res => res.json())
         .then(function(res) {
             reloadRecentSearchUI(res);
